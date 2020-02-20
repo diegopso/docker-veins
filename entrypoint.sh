@@ -28,7 +28,7 @@ case "$1" in
         ;;
     omnet)
 	set_xauth
-	/root/omnetpp-5.3/bin/omnetpp
+	/root/omnetpp-5.6/bin/omnetpp
         ;;
     xeyes)
 	set_xauth

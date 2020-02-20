@@ -16,21 +16,23 @@ It extends these to offer a comprehensive suite of models for IVC simulation.
 ### Clone the repository
 
 ```console
-$ git clone https://github.com/andrespp/docker-veins.git
+$ git clone https://github.com/diegopso/docker-veins.git
 ```
 
 ### Download OMNeT++
 
 Omnet++ links have direct link protection with captcha verification, making it not possible to directly download the installer. 
 
-So, you need to download OMNeT++ manually from this [link](https://omnetpp.org/component/jdownloads/summary/32-release-older-versions/2325-omnetpp-5-3-linux).
+So, you need to download OMNeT++ manually from this [link](https://omnetpp.org/component/jdownloads/summary/32-release-older-versions/2325-omnetpp-5-6-linux).
 
 After the download, you repository should look like this
 
 ```console
 andre@ludwig:~/docker-veins$ ls
-Dockerfile  entrypoint.sh  Makefile  omnetpp-5.3-src-linux.tgz  README.md
+Dockerfile  entrypoint.sh  Makefile  omnetpp-5.6-src-linux.tgz  README.md
 ```
+
+> **Deprecated:** now uses `wget` to download inside container.
 
 ### Build Docker Image
 
@@ -47,7 +49,7 @@ $ /entrypoint.sh omnet
 
 ### Import and Build Veins Project
 
-Import the project into your OMNeT++ IDE workspace by clicking `File > Import > General: Existing Projects into Workspace` and selecting the directory `/root/veins-veins-4.7.1`.
+Import the project into your OMNeT++ IDE workspace by clicking `File > Import > General: Existing Projects into Workspace` and selecting the directory `/root/veins-veins-5.0`.
 
 Build the newly imported project by choosing `Project > Build All` in the OMNeT++ 5 IDE.
 
@@ -56,7 +58,7 @@ After the project built, you are ready to run your first IVC evaluations, but to
 ### Make sure SUMO is working
 
 ```console
-root@303866cf2f6c:~/# sumo-gui /root/veins-veins-4.7.1/examples/veins/erlangen.sumo.cfg
+root@303866cf2f6c:~/# sumo-gui /root/veins-veins-5.0/examples/veins/erlangen.sumo.cfg
 ```
 
 ### Run the Veins demo scenario
@@ -64,7 +66,7 @@ root@303866cf2f6c:~/# sumo-gui /root/veins-veins-4.7.1/examples/veins/erlangen.s
 To save you the trouble of manually running SUMO prior to every OMNeT++ simulation, the Veins module framework comes with a small python script to do that for you. In the OMNeT++ MinGW command line window, run:
 
 ```console
-root@303866cf2f6c:~/# /root/veins-veins-4.7.1/sumo-launchd.py -vv -c sumo
+root@303866cf2f6c:~/# /root/veins-veins-5.0/sumo-launchd.py -vv -c sumo
 ```
 
 In the OMNeT++ 5 IDE, simulate the Veins demo scenario by right-clicking on `veins-4.7/examples/veins/omnetpp.ini` and choosing `Run As > OMNeT++ simulation`.

@@ -19,21 +19,6 @@ It extends these to offer a comprehensive suite of models for IVC simulation.
 $ git clone https://github.com/diegopso/docker-veins.git
 ```
 
-### Download OMNeT++
-
-Omnet++ links have direct link protection with captcha verification, making it not possible to directly download the installer. 
-
-So, you need to download OMNeT++ manually from this [link](https://omnetpp.org/component/jdownloads/summary/32-release-older-versions/2325-omnetpp-5-6-linux).
-
-After the download, you repository should look like this
-
-```console
-andre@ludwig:~/docker-veins$ ls
-Dockerfile  entrypoint.sh  Makefile  omnetpp-5.6-src-linux.tgz  README.md
-```
-
-> **Deprecated:** now uses `wget` to download inside container.
-
 ### Build Docker Image
 
 ```console
@@ -69,7 +54,7 @@ To save you the trouble of manually running SUMO prior to every OMNeT++ simulati
 root@303866cf2f6c:~/# /root/veins-veins-5.0/sumo-launchd.py -vv -c sumo
 ```
 
-In the OMNeT++ 5 IDE, simulate the Veins demo scenario by right-clicking on `veins-4.7/examples/veins/omnetpp.ini` and choosing `Run As > OMNeT++ simulation`.
+In the OMNeT++ 5 IDE, simulate the Veins demo scenario by right-clicking on `veins-5.0/examples/veins/omnetpp.ini` and choosing `Run As > OMNeT++ simulation`.
 
 Similar to the last example, this should create and start a launch configuration. You can later re-launch this configuration by clicking the green Run button in the OMNeT++ 5 IDE.
 

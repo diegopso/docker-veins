@@ -30,7 +30,7 @@ run-omnet:
 .PHONY: run-bash
 run-bash:
 	docker run -it --rm -v /tmp/.X11-unix/:/tmp/.X11-unix/:ro \
-	-v $$(pwd)/data/:/root/omnetpp-5.6/samples/ \
+	-v $$(pwd)/data/:/root/projects/ \
 	-e XAUTH=$$(xauth list|grep `uname -n` | cut -d ' ' -f5) -e "DISPLAY" \
 	$(IMAGE) bash
 

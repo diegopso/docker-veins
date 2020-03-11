@@ -32,6 +32,10 @@ $ make run-bash
 $ /entrypoint.sh omnet
 ```
 
+### Import Omnet++ Samples
+
+The samples are copied to `/root/omnet-samples`, if you want to import it look for this directory.
+
 ### Import and Build Veins Project
 
 Import the project into your OMNeT++ IDE workspace by clicking `File > Import > General: Existing Projects into Workspace` and selecting the directory `/root/veins-veins-5.0`.

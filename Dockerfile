@@ -54,7 +54,8 @@ RUN cd /root && wget https://veins.car2x.org/download/veins-$VEINS_VERSION.zip &
 
 COPY ./entrypoint.sh /
 
-RUN mkdir -p /root/projects
+RUN mkdir -p /root/omnet-samples && \
+	cp -R /root/omnetpp-$OMNET_VERSION/samples/* /root/omnet-samples
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]

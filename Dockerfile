@@ -36,7 +36,7 @@ RUN wget https://downloads.sourceforge.net/project/sumo/sumo/version%20$SUMO_VER
 	./configure && \
 	make && \
 	make install && \
-	cd .. && rm -rf sumo*
+	cd ..
 
 # Build and Install OMNet++ IDE
 RUN	wget https://github.com/omnetpp/omnetpp/releases/download/omnetpp-$OMNET_VERSION/omnetpp-$OMNET_VERSION-src-linux.tgz && \

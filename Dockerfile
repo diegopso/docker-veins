@@ -57,5 +57,7 @@ COPY ./entrypoint.sh /
 RUN mkdir -p /root/omnet-samples && \
 	cp -R /root/omnetpp-$OMNET_VERSION/samples/* /root/omnet-samples
 
+ENV SUMO_HOME /root/sumo-$SUMO_VERSION
+
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]

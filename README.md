@@ -38,10 +38,10 @@ The samples are copied to `/root/omnet-samples`, if you want to import it look f
 
 ### Import and Build Veins Project
 
-Copy the the framework in the samples directory to prevent data loss.
+Copy the framework in the samples directory to prevent data loss.
 
 ```
-cp -R /root/veins-veins-5.0 /root/omnetpp-5.6/samples/
+cp -R /root/veins-veins-5.0 /root/omnetpp-5.6/samples/veins
 ```
 
 Import the project into your OMNeT++ IDE workspace by clicking `File > Import > General: Existing Projects into Workspace` and selecting the directory `/root/omnetpp-5.6/samples/veins-veins-5.0`.
@@ -52,10 +52,10 @@ After the project built, you are ready to run your first IVC evaluations, but to
 
 ### Import and Build Openflow Extension
 
-Copy the the framework in the samples directory to prevent data loss.
+Copy the extension in the samples directory to prevent data loss.
 
 ```
-cp -R /root/openflow-omnetpp5-inet3.x-extension /root/omnetpp-5.6/samples/
+cp -R /root/openflow-omnetpp5-inet3.x-extension /root/omnetpp-5.6/samples/openflow
 ```
 
 Import the project into your OMNeT++ IDE workspace by clicking `File > Import > General: Existing Projects into Workspace` and selecting the directory `/root/omnetpp-5.6/samples/openflow-omnetpp5-inet3.x-extension`.

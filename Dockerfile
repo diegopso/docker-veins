@@ -59,5 +59,16 @@ RUN mkdir -p /root/omnet-samples && \
 
 ENV SUMO_HOME /root/sumo-$SUMO_VERSION
 
+# Install Python PIP and dependencies
+RUN	apt-get update && apt-get -y upgrade && \
+	apt-get install -y python-pip python-tk && \
+	pip install matplotlib
+
+# Get openflow extension
+RUN	wget https://github.com/danhld/openflow/archive/master.zip && \
+	unzip master.zip && \
+	rm master.zip && \
+	mv openflow-master/ openflow-omnetpp5-inet3.x-extension
+
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]

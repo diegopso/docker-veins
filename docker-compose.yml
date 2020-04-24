@@ -6,8 +6,8 @@ services:
     tty: true
     command: bash
     environment:
-      - XAUTH=$$(xauth list|grep `uname -n` | cut -d ' ' -f5)
-      - DISPLAY
+      - XAUTH=$(xauth list|grep `uname -n` | cut -d ' ' -f5)
+      - DISPLAY=:0
     volumes:
       - "./tmp/.X11-unix/:/tmp/.X11-unix/:ro"
       - "./projects/:/root/omnetpp-5.6/samples/"

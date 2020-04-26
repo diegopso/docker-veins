@@ -68,7 +68,23 @@ RUN	apt-get update && apt-get -y upgrade && \
 RUN	wget https://github.com/danhld/openflow/archive/master.zip && \
 	unzip master.zip && \
 	rm master.zip && \
-	mv openflow-master/ openflow-omnetpp5-inet3.x-extension
+	mv openflow-master/ openflow && \
+	sed -i "s/class inet::PingPayload\;/namespace inet \{class PingPayload\;\}/g" /root/openflow/apps/PingAppRandom.h
+
+# Get INET 3.5.0 and setup for openflow extension
+RUN	wget https://github.com/inet-framework/inet/releases/download/v3.5.0/inet-3.5.0-src.tgz && \
+	tar -xzf inet-3.5.0-src.tgz && \
+	rm inet-3.5.0-src.tgz && \
+	sed -i '0,/if (ift)/ s/if (ift)/if (ift \&\& par("doRegisterAtIft").boolValue())/g' /root/inet/src/inet/linklayer/base/MACBase.cc && \
+	sed -i "0,/parameters:/ s/parameters:/parameters:\n        bool doRegisterAtIft = default(true); \/\/ openflow compatibility/g" /root/inet/src/inet/linklayer/ethernet/EtherMAC.ned && \
+	sed -i "0,/parameters:/ s/parameters:/parameters:\n        bool doRegisterAtIft = default(true); \/\/ openflow compatibility/g" /root/inet/src/inet/linklayer/ethernet/EtherMACFullDuplex.ned && \
+	sed -i 's/#OSGEARTH_LIBS=/OSGEARTH_LIBS=" -losgEarth -losgEarthUtil -lgeos_c "/g' /root/omnetpp-$OMNET_VERSION/configure.user && \
+	add-apt-repository ppa:ubuntugis/ppa && \
+	apt update && \
+	apt install -y g++ libxml2-dev libosgearth-dev bison flex clang swig libqt5opengl5-dev qt5-qmake openjdk-8-jre libopenmpi-dev tcl8.5-dev tk8.5-dev && \
+	cd /root/omnetpp-$OMNET_VERSION && \
+	export PATH=$PATH:/root/omnetpp-5.6/bin && \
+	./configure
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]

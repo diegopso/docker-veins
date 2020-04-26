@@ -72,19 +72,20 @@ RUN	wget https://github.com/danhld/openflow/archive/master.zip && \
 	sed -i "s/class inet::PingPayload\;/namespace inet \{class PingPayload\;\}/g" /root/openflow/apps/PingAppRandom.h
 
 # Get INET 3.5.0 and setup for openflow extension
-RUN	wget https://github.com/inet-framework/inet/releases/download/v3.5.0/inet-3.5.0-src.tgz && \
-	tar -xzf inet-3.5.0-src.tgz && \
-	rm inet-3.5.0-src.tgz && \
-	sed -i '0,/if (ift)/ s/if (ift)/if (ift \&\& par("doRegisterAtIft").boolValue())/g' /root/inet/src/inet/linklayer/base/MACBase.cc && \
-	sed -i "0,/parameters:/ s/parameters:/parameters:\n        bool doRegisterAtIft = default(true); \/\/ openflow compatibility/g" /root/inet/src/inet/linklayer/ethernet/EtherMAC.ned && \
-	sed -i "0,/parameters:/ s/parameters:/parameters:\n        bool doRegisterAtIft = default(true); \/\/ openflow compatibility/g" /root/inet/src/inet/linklayer/ethernet/EtherMACFullDuplex.ned && \
-	sed -i 's/#OSGEARTH_LIBS=/OSGEARTH_LIBS=" -losgEarth -losgEarthUtil -lgeos_c "/g' /root/omnetpp-$OMNET_VERSION/configure.user && \
-	add-apt-repository ppa:ubuntugis/ppa && \
-	apt update && \
-	apt install -y g++ libxml2-dev libosgearth-dev bison flex clang swig libqt5opengl5-dev qt5-qmake openjdk-8-jre libopenmpi-dev tcl8.5-dev tk8.5-dev && \
-	cd /root/omnetpp-$OMNET_VERSION && \
-	export PATH=$PATH:/root/omnetpp-5.6/bin && \
-	./configure
+RUN	wget https://github.com/inet-framework/inet/archive/v3.99.3.zip && \
+	unzip v3.99.3.zip && \
+	rm v3.99.3.zip && \
+	wget https://raw.githubusercontent.com/inet-framework/inet/fccb335dfcb01e2890e4b39a8d65610f4010d6e9/src/inet/visualizer/scene/SceneOsgEarthVisualizer.h && \
+	wget https://raw.githubusercontent.com/inet-framework/inet/fccb335dfcb01e2890e4b39a8d65610f4010d6e9/src/inet/common/geometry/common/GeographicCoordinateSystem.cc && \
+	wget https://raw.githubusercontent.com/inet-framework/inet/fccb335dfcb01e2890e4b39a8d65610f4010d6e9/src/inet/common/geometry/common/GeographicCoordinateSystem.ned && \
+	wget https://raw.githubusercontent.com/inet-framework/inet/fccb335dfcb01e2890e4b39a8d65610f4010d6e9/src/inet/visualizer/scene/SceneOsgEarthVisualizer.cc && \
+	mv GeographicCoordinateSystem.* /root/inet-3.99.3/src/inet/common/geometry/common/ && \
+	mv SceneOsgEarthVisualizer.* /root/inet-3.99.3/src/inet/visualizer/scene/ && \
+	sed -i "s/cPacketQueue(name, nullptr)/cPacketQueue(name, (Comparator *) nullptr)/g" inet-3.99.3/src/inet/common/queue/PacketQueue.cc && \
+	sed -i "s/cQueue(name, nullptr)/cQueue(name, (Comparator *) nullptr)/g" inet-3.99.3/src/inet/linklayer/ieee80211/mac/queue/Ieee80211Queue.cc && \
+	sed -i '0,/if (ift)/ s/if (ift)/if (ift \&\& par("doRegisterAtIft").boolValue())/g' /root/inet-3.99.3/src/inet/linklayer/base/MacBase.cc && \
+	sed -i "0,/parameters:/ s/parameters:/parameters:\n        bool doRegisterAtIft = default(true); \/\/ openflow compatibility/g" /root/inet-3.99.3/src/inet/linklayer/ethernet/EtherMac.ned && \
+	sed -i "0,/parameters:/ s/parameters:/parameters:\n        bool doRegisterAtIft = default(true); \/\/ openflow compatibility/g" /root/inet-3.99.3/src/inet/linklayer/ethernet/EtherMacFullDuplex.ned
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]

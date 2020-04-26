@@ -55,8 +55,8 @@ After the project built, you are ready to run your first IVC evaluations, but to
 Copy in the samples directory to prevent data loss.
 
 ```
-cp -R /root/openflow-omnetpp5-inet3.x-extension /root/omnetpp-5.6/samples/openflow
-cp -R /root/inet /root/omnetpp-5.6/samples/inet-3.5.0
+cp -R /root/openflow /root/omnetpp-5.6/samples/
+cp -R /root/inet-3.99.3 /root/omnetpp-5.6/samples/
 ```
 
 Import the project into your OMNeT++ IDE workspace by clicking `File > Import > General: Existing Projects into Workspace` and selecting the directories `/root/omnetpp-5.6/samples/openflow-omnetpp5-inet3.x-extension` and `/root/omnetpp-5.6/samples/inet-3.5.0`.

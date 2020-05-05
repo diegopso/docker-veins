@@ -87,5 +87,9 @@ RUN	wget https://github.com/inet-framework/inet/archive/v3.99.3.zip && \
 	sed -i "0,/parameters:/ s/parameters:/parameters:\n        bool doRegisterAtIft = default(true); \/\/ openflow compatibility/g" /root/inet-3.99.3/src/inet/linklayer/ethernet/EtherMac.ned && \
 	sed -i "0,/parameters:/ s/parameters:/parameters:\n        bool doRegisterAtIft = default(true); \/\/ openflow compatibility/g" /root/inet-3.99.3/src/inet/linklayer/ethernet/EtherMacFullDuplex.ned
 
+# Install valgrind for profiling
+RUN	apt-get install -y apt-utils && \
+	apt-get install -y valgrind
+
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]

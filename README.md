@@ -66,7 +66,7 @@ Build the newly imported project by choosing `Project > Build All` in the OMNeT+
 ### Make sure SUMO is working
 
 ```console
-root@303866cf2f6c:~/# sumo-gui /root/veins-veins-5.0/examples/veins/erlangen.sumo.cfg
+sumo-gui /root/veins-veins-5.0/examples/veins/erlangen.sumo.cfg
 ```
 
 ### Run the Veins demo scenario
@@ -74,7 +74,7 @@ root@303866cf2f6c:~/# sumo-gui /root/veins-veins-5.0/examples/veins/erlangen.sum
 To save you the trouble of manually running SUMO prior to every OMNeT++ simulation, the Veins module framework comes with a small python script to do that for you. In the OMNeT++ MinGW command line window, run:
 
 ```console
-root@303866cf2f6c:~/# /root/veins-veins-5.0/sumo-launchd.py -vv -c sumo
+/root/veins-veins-5.0/sumo-launchd.py -vv -c sumo
 ```
 
 In the OMNeT++ 5 IDE, simulate the Veins demo scenario by right-clicking on `veins-5.0/examples/veins/omnetpp.ini` and choosing `Run As > OMNeT++ simulation`.

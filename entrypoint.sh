@@ -30,6 +30,9 @@ case "$1" in
 	set_xauth
 	/root/omnetpp-5.6/bin/omnetpp
         ;;
+    sumo)
+        /root/veins-veins-5.0/sumo-launchd.py -vv -c sumo
+        ;;
     xeyes)
 	set_xauth
 	xeyes

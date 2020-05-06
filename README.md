@@ -96,11 +96,11 @@ Run the `Dockerfile.sh` as super user.
 
 Change the owner of the files create in the home directory (e.g., sumo, veins, omnet, etc.) to your user -- maybe `sudo chown -R user:user ~/`.
 
-Add environment variables to your user by appending the following lines to `~/.profile`. Change `$SUMO_VERSION` for the actual number.
+Add environment variables to your user by appending the following lines to `~/.profile`. Change variables for actual values.
 
 ```
-PATH=$PATH:/home/diego/omnetpp-$OMNET_VERSION/bin 
-SUMO_HOME=/home/diego/sumo-$SUMO_VERSION
+PATH=$PATH:/home/$USER/omnetpp-$OMNET_VERSION/bin 
+SUMO_HOME=/home/$USER/sumo-$SUMO_VERSION
 ```
 
 If you want, adjust `entrypoint.sh` file paths to use it.

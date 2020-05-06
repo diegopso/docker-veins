@@ -6,7 +6,7 @@ ENV SUMO_VERSION 0.32.0
 ENV OMNET_VERSION 5.6
 ENV VEINS_VERSION 5.0
 
-ENV TZ=Europe/Zurich
+ENV TZ Europe/Zurich
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 MAINTAINER Andre Pereira andrespp@gmail.com
@@ -52,8 +52,6 @@ RUN cd /root && wget https://veins.car2x.org/download/veins-$VEINS_VERSION.zip &
 	unzip veins-$VEINS_VERSION.zip && \
 	rm veins-$VEINS_VERSION.zip
 
-COPY ./entrypoint.sh /
-
 RUN mkdir -p /root/omnet-samples && \
 	cp -R /root/omnetpp-$OMNET_VERSION/samples/* /root/omnet-samples
 
@@ -71,25 +69,24 @@ RUN	wget https://github.com/danhld/openflow/archive/master.zip && \
 	mv openflow-master/ openflow && \
 	sed -i "s/class inet::PingPayload\;/namespace inet \{class PingPayload\;\}/g" /root/openflow/apps/PingAppRandom.h
 
-# Get INET 3.5.0 and setup for openflow extension
-RUN	wget https://github.com/inet-framework/inet/archive/v3.99.3.zip && \
-	unzip v3.99.3.zip && \
-	rm v3.99.3.zip && \
+ENV INET_VERSION 3.99.3
+
+# Get INET 3.x and setup for openflow extension
+RUN	wget https://github.com/inet-framework/inet/archive/v$INET_VERSION.zip && \
+	unzip v$INET_VERSION.zip && \
+	rm v$INET_VERSION.zip && \
 	wget https://raw.githubusercontent.com/inet-framework/inet/fccb335dfcb01e2890e4b39a8d65610f4010d6e9/src/inet/visualizer/scene/SceneOsgEarthVisualizer.h && \
 	wget https://raw.githubusercontent.com/inet-framework/inet/fccb335dfcb01e2890e4b39a8d65610f4010d6e9/src/inet/common/geometry/common/GeographicCoordinateSystem.cc && \
 	wget https://raw.githubusercontent.com/inet-framework/inet/fccb335dfcb01e2890e4b39a8d65610f4010d6e9/src/inet/common/geometry/common/GeographicCoordinateSystem.ned && \
 	wget https://raw.githubusercontent.com/inet-framework/inet/fccb335dfcb01e2890e4b39a8d65610f4010d6e9/src/inet/visualizer/scene/SceneOsgEarthVisualizer.cc && \
-	mv GeographicCoordinateSystem.* /root/inet-3.99.3/src/inet/common/geometry/common/ && \
-	mv SceneOsgEarthVisualizer.* /root/inet-3.99.3/src/inet/visualizer/scene/ && \
-	sed -i "s/cPacketQueue(name, nullptr)/cPacketQueue(name, (Comparator *) nullptr)/g" inet-3.99.3/src/inet/common/queue/PacketQueue.cc && \
-	sed -i "s/cQueue(name, nullptr)/cQueue(name, (Comparator *) nullptr)/g" inet-3.99.3/src/inet/linklayer/ieee80211/mac/queue/Ieee80211Queue.cc && \
-	sed -i '0,/if (ift)/ s/if (ift)/if (ift \&\& par("doRegisterAtIft").boolValue())/g' /root/inet-3.99.3/src/inet/linklayer/base/MacBase.cc && \
-	sed -i "0,/parameters:/ s/parameters:/parameters:\n        bool doRegisterAtIft = default(true); \/\/ openflow compatibility/g" /root/inet-3.99.3/src/inet/linklayer/ethernet/EtherMac.ned && \
-	sed -i "0,/parameters:/ s/parameters:/parameters:\n        bool doRegisterAtIft = default(true); \/\/ openflow compatibility/g" /root/inet-3.99.3/src/inet/linklayer/ethernet/EtherMacFullDuplex.ned
+	mv GeographicCoordinateSystem.* /root/inet-$INET_VERSION/src/inet/common/geometry/common/ && \
+	mv SceneOsgEarthVisualizer.* /root/inet-$INET_VERSION/src/inet/visualizer/scene/ && \
+	sed -i "s/cPacketQueue(name, nullptr)/cPacketQueue(name, (Comparator *) nullptr)/g" inet-$INET_VERSION/src/inet/common/queue/PacketQueue.cc && \
+	sed -i "s/cQueue(name, nullptr)/cQueue(name, (Comparator *) nullptr)/g" inet-$INET_VERSION/src/inet/linklayer/ieee80211/mac/queue/Ieee80211Queue.cc && \
+	sed -i '0,/if (ift)/ s/if (ift)/if (ift \&\& par("doRegisterAtIft").boolValue())/g' /root/inet-$INET_VERSION/src/inet/linklayer/base/MacBase.cc && \
+	sed -i "0,/parameters:/ s/parameters:/parameters:\n        bool doRegisterAtIft = default(true); \/\/ openflow compatibility/g" /root/inet-$INET_VERSION/src/inet/linklayer/ethernet/EtherMac.ned && \
+	sed -i "0,/parameters:/ s/parameters:/parameters:\n        bool doRegisterAtIft = default(true); \/\/ openflow compatibility/g" /root/inet-$INET_VERSION/src/inet/linklayer/ethernet/EtherMacFullDuplex.ned
 
-# Install valgrind for profiling
-RUN	apt-get install -y apt-utils && \
-	apt-get install -y valgrind
-
+COPY ./entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]

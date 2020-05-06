@@ -81,10 +81,29 @@ In the OMNeT++ 5 IDE, simulate the Veins demo scenario by right-clicking on `vei
 
 Similar to the last example, this should create and start a launch configuration. You can later re-launch this configuration by clicking the green Run button in the OMNeT++ 5 IDE.
 
-## Requirements
+### Requirements
 
 * Docker
 * X11 with xauth
+
+## Usage without Docker
+
+Configure home directory in `docker2sh.sh`.
+
+Execute command `./docker2sh.sh`, should generate a file called `Dockerfile.sh`.
+
+Run the `Dockerfile.sh` as super user.
+
+Change the owner of the files create in the home directory (e.g., sumo, veins, omnet, etc.) to your user -- maybe `sudo chown -R user:user ~/`.
+
+Add environment variables to your user by appending the following lines to `~/.profile`. Change `$SUMO_VERSION` for the actual number.
+
+```
+PATH=$PATH:/home/diego/omnetpp-$OMNET_VERSION/bin 
+SUMO_HOME=/home/diego/sumo-$SUMO_VERSION
+```
+
+If you want, adjust `entrypoint.sh` file paths to use it.
 
 ## References
 * [Veins Instalation Tutorial](https://veins.car2x.org/tutorial/)

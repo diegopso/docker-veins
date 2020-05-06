@@ -5,3 +5,4 @@ data/
 .jupyter/
 .local/
 omnetpp-5.3-src-linux.tgz
+Dockerfile.sh
